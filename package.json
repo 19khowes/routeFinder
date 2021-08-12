@@ -1,0 +1,31 @@
+{
+  "name": "routefinder",
+  "version": "1.0.0",
+  "description": "Uses Maps API to locate places on a map",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "devStart": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/19khowes/routeFinder.git"
+  },
+  "keywords": [
+    "maps"
+  ],
+  "author": "Kade Howes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/19khowes/routeFinder/issues"
+  },
+  "homepage": "https://github.com/19khowes/routeFinder#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
