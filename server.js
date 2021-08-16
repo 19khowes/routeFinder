@@ -19,6 +19,6 @@ app.get('/getcoords/:address', async (request, response) => {
     const position_response = await fetch(url);
     const json = await position_response.json();
     console.log(json);
-    response.json({address_sent: address});
+    response.json(json);
 });
 

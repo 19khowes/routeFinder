@@ -1,6 +1,5 @@
-let mymap = L.map('map').setView([41.750694, -111.816532], 1);
+let mymap = L.map('map').setView([41.750694, -111.816532], 5);
 
-let marker = L.marker([41.750694, -111.816532]).addTo(mymap);
 let newmarker;
 
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiaG93ZXNrYWRlIiwiYSI6ImNrczllaWV1dzBzMnUyeG56ZG1jOHk4dXIifQ.Im7XZC_A12MSAGzRcTwhAg', {
@@ -21,10 +20,13 @@ submitButton.addEventListener('click', async () => {
     };
     const response = await fetch(`/getcoords/${addressInput.value.trim()}`);
     const json = await response.json();
-    console.log(json);
-    // const latlon = latlonInput.value.trim().split(',');
-    // const lat = latlon[0];
-    // const lon = latlon[1];
-    // newmarker = L.marker([lat, lon]).addTo(mymap);
+    const data = json.data[0];
+    const lat = data.latitude;
+    const lon = data.longitude;
+    const label = data.label;
+    console.log(lat, lon);
+    // Create marker for coordinates
+    newmarker = L.marker([lat, lon]).addTo(mymap);
+    newmarker.bindPopup(label);
     // // console.log(latInput.value, lonInput.value);
 });
