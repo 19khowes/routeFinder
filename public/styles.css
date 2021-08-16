@@ -1,0 +1,27 @@
+.container{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.input-area {
+    height: 100vh;
+    width: 50vw;
+    padding: 10px;
+}
+
+.map-area {
+    height: 100vh;
+    width: 50vw;
+}
+
+#map {
+    position: relative;
+    top: 25vh;
+    height: 50vh;
+    width: 75%;
+    margin: auto;
+}
+
+body {
+    margin: 0;
+}
