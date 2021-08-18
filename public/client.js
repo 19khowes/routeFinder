@@ -1,4 +1,5 @@
-let mymap = L.map('map').setView([41.750694, -111.816532], 5);
+// map things
+let mymap = L.map('map').setView([43.6735741,-111.9326901], 10);
 
 let newmarker;
 
@@ -11,8 +12,11 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     accessToken: 'pk.eyJ1IjoiaG93ZXNrYWRlIiwiYSI6ImNrczllaWV1dzBzMnUyeG56ZG1jOHk4dXIifQ.Im7XZC_A12MSAGzRcTwhAg'
 }).addTo(mymap);
 
+
+// non map things
 const addressInput = document.getElementById('address-input');
 const submitButton = document.getElementById('submit');
+let dropArea = document.getElementById('drop-area');
 
 submitButton.addEventListener('click', async () => {
     const option = {
@@ -43,34 +47,72 @@ submitButton.addEventListener('click', async () => {
     // // // console.log(latInput.value, lonInput.value);
 });
 
-function dropHandler(ev) {
-    console.log('File(s) dropped');
+dropArea.addEventListener('dragenter', preventDefaults, false);
+dropArea.addEventListener('dragover', preventDefaults, false);
+dropArea.addEventListener('dragleave', preventDefaults, false);
+dropArea.addEventListener('drop', preventDefaults, false);
 
-    // Prevent default behavior (Prevent file from being opened)
-    ev.preventDefault();
-
-    if (ev.dataTransfer.items) {
-        // Use DataTransferItemList interface to access the file(s)
-        for (var i = 0; i < ev.dataTransfer.items.length; i++) {
-            // If dropped items aren't files, reject them
-            if (ev.dataTransfer.items[i].kind === 'file') {
-                var file = ev.dataTransfer.items[i].getAsString((data) => {
-                    console.log(data);
-                });
-            }
-        }
-    } else {
-        // Use DataTransfer interface to access the file(s)
-        for (var i = 0; i < ev.dataTransfer.files.length; i++) {
-            console.log('file: ' + ev.dataTransfer.files[i]);
-        }
-    }
+function preventDefaults(event) {
+    event.preventDefault();
+    event.stopPropagation();
 }
 
-function dragOverHandler(ev) {
-    console.log('File(s) in drop zone');
-  
-    // Prevent default behavior (Prevent file from being opened)
-    ev.preventDefault();
-  }
-  
+dropArea.addEventListener('dragenter', highlight, false);
+dropArea.addEventListener('dragover', highlight, false);
+
+dropArea.addEventListener('dragleave', unhighlight, false);
+dropArea.addEventListener('drop', unhighlight, false);
+
+function highlight(event) {
+    dropArea.classList.add('highlight')
+}
+
+function unhighlight(event) {
+    dropArea.classList.remove('highlight')
+}
+
+dropArea.addEventListener('drop', handleDrop, false);
+
+function handleDrop(event) {
+    let transfer = event.dataTransfer;
+    let files = transfer.files;
+
+    handleFiles(files);
+}
+
+function handleFiles(files) {
+    ([...files]).forEach(uploadFile);
+}
+
+async function uploadFile(file) {
+    // console.log(file);
+    let url = '/dropped'; // Put url for sending to server
+    let formData = new FormData();
+
+    formData.append('file', file);
+    console.log(formData);
+    let options = {
+        method: 'POST',
+        // headers: {
+        //     'Content-Type': 'multipart/form-data'
+        // },
+        body: formData
+    }
+
+    const response = await fetch(url, options);
+    const json = await response.json();
+    // json here contains people_array with people's longitude/latitude and all that
+    console.log(json);
+
+    // mapping out the people array    
+    const people = json.people_array;
+    for (person of people) {
+        console.log(person);
+        const lat = person.latitude;
+        const lon = person.longitude;
+        const label = person.pos_label;
+        const name = person.name;
+        newmarker = L.marker([lat, lon]).addTo(mymap);
+        newmarker.bindPopup(`${name}: ${label}`);
+    }
+}
