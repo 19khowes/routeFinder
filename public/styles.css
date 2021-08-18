@@ -1,36 +1,53 @@
-.container{
+.container {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
+    align-items: stretch;
     margin: 0;
     padding: 0;
 }
 
-.input-area {
+.item {
+    display: flex;
+    flex-grow: 1;
+    position: relative;
     height: 100vh;
-    width: 50vw;
-    padding: 10px;
+    margin: 0;
+    background-color: #636363;
 }
 
-.map-area {
-    height: 100vh;
-    width: 50vw;
-    margin: 0;
+.input-area {
+    flex-direction: column;
+    align-items: center;
 }
 
 #map {
-    position: relative;
-    top: 25vh;
-    height: 50vh;
-    width: 75%;
+    position: absolute;
+    height: 100%;
+    width: 100%;
     margin: auto;
 }
 
-#drop-zone {
-    margin: 10px;
-    border: 2px solid black;
-    width:  200px;
-    height: 100px;
-  }
+.map-area {
+    flex-grow: 3;
+}
+
+button {
+    width: 130px;
+    height: 35px;
+    display: inline-block;
+    /* padding: 1em; */
+    border-radius: 0.15em;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 200;
+    font-size: large;
+    color: #FFFFFF;
+    background-color: #3369ff;
+    box-shadow: inset 0 -0.2em 0 -0.35em rgba(0, 0, 0, 0.17);
+    text-align: center;
+    position: relative;
+}
 
 body {
     margin: 0;
@@ -39,43 +56,60 @@ body {
 
 /* drop area styles from  https://www.smashingmagazine.com/2018/01/drag-drop-file-uploader-vanilla-js/ */
 #drop-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: 2px dashed #ccc;
     border-radius: 20px;
-    width: 480px;
+    height: 25%;
+    width: 75%;
     font-family: sans-serif;
     margin: 100px auto;
     padding: 20px;
-  }
-  #drop-area.highlight {
+}
+
+#drop-area.highlight {
     border-color: purple;
-  }
-  p {
-    margin-top: 0;
-  }
-  .my-form {
+}
+
+p {
+    margin: 0;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 200;
+    font-size: large;
+}
+
+.my-form {
     margin-bottom: 10px;
-  }
-  #gallery {
+}
+
+#gallery {
     margin-top: 10px;
-  }
-  #gallery img {
+}
+
+#gallery img {
     width: 150px;
     margin-bottom: 10px;
     margin-right: 10px;
     vertical-align: middle;
-  }
-  .button {
+}
+
+.button {
     display: inline-block;
     padding: 10px;
     background: #ccc;
     cursor: pointer;
     border-radius: 5px;
     border: 1px solid #ccc;
-  }
-  .button:hover {
+}
+
+.button:hover {
     background: #ddd;
-  }
-  #fileElem {
+}
+
+#fileElem {
     display: none;
-  }
-  /* *********************************************************** */
+}
+
+/* *********************************************************** */
